@@ -17,7 +17,7 @@ class Event (models.Model):
     priority = models.CharField(max_length=1, choices=priorities_list)
 
     class Meta:
-        ordering = ('-date', '-priority','event')
+        ordering = ('date', 'priority','event')
 
     def number_of_comments(self):
         return self.comment_event.count()
