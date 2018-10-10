@@ -31,9 +31,15 @@ class Cadastro(models.Model):
     published_date = models.DateTimeField(
         blank=True, null=True)
 
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+    sexo = {
+        ('0','Feminino'),
+        ('1','Masculino'),
+    }
+
+    estado = {
+        ('0', 'Solteiro'),
+        ('1', 'Casado'),
+    }
 
     def __str__(self):
         return self.title

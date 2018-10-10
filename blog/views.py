@@ -73,22 +73,22 @@ def post_edit(request, pk):
 
 
 def cad_list(request):
-    regs = Cadastro.objects.all()
-    return render(request, 'blog/cad_list.html', {'regs': regs})
+    cadastros = Cadastro.objects.all()
+    return render(request, 'blog/cad_list.html', {'cadastros': cadastros})
 
 
 def cad_detail(request, pk):
-    reg = get_object_or_404(Cadastro, pk=pk)
-    return render(request, 'blog/cad_detail.html', {'reg': reg})
+    cadastro = get_object_or_404(Cadastro, pk=pk)
+    return render(request, 'blog/cad_detail.html', {'cadastro': cadastro})
 
 
 def cad_new(request):
     if request.method == "POST":
         form = CadForm(request.POST)
         if form.is_valid():
-            reg = form.save(commit=False)
-            reg.save()
-            return redirect('cad_detail', pk=reg.pk)
+            cadastro = form.save(commit=False)
+            cadastro.save()
+            return redirect('cad_detail', pk=cadastro.pk)
     else:
         form = CadForm()
     day = datetime(localdate().year, localdate().month, localdate().day)
@@ -106,18 +106,18 @@ def day():
     }
 
 def cad_edit(request, pk):
-    reg = get_object_or_404(Register, pk=pk)
+    cadastro = get_object_or_404(Register, pk=pk)
     if request.method == "REGISTER":
-        form = CadForm(request.REGISTER, instance=reg)
+        form = CadForm(request.REGISTER, instance=cadastro)
         if form.is_valid():
-            reg = form.save(commit=False)
-            reg.save()
-            return redirect('cad_detail', pk=reg.pk)
+            cadastro = form.save(commit=False)
+            cadastro.save()
+            return redirect('cad_detail', pk=cadastro.pk)
     else:
-        form = CadForm(instance=reg)
+        form = CadForm(instance=cadastro)
 
     context = {
-        'events': Register.objects.all(),
+        'events': Cadastro.objects.all(),
         'form': form
     }
 
