@@ -23,7 +23,7 @@ class Cadastro(models.Model):
     idade = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     telefone = models.CharField(max_length=50)
-    aniversario = models.CharField(max_length=3)
+    aniversario = models.CharField(max_length=8)
 
 
     sexo_list = (
