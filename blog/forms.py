@@ -10,4 +10,4 @@ class PostForm(forms.ModelForm):
 class CadForm(forms.ModelForm):
     class Meta:
         model = Cadastro
-        fields = ('nome', 'idade', 'email', 'telefone', 'aniversario',)
+        fields = ('nome', 'idade', 'email', 'telefone', 'aniversario','sexo','estado',)

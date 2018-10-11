@@ -1,13 +1,11 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/base_cad.html' %}
 
 {% block content %}
     {% for cadastro in cadastros %}
         <div class="post">
             <div class="date">
-                {{ cadastro.published_date }}
             </div>
-            <h1><a href="{% url 'cad_detail' pk=post.pk %}">{{ cadastro.title }}</a></h1>
-            <p>{{ cadastro.text|linebreaksbr }}</p>
+            <h1><a href="{% url 'cad_detail' pk=cadastro.pk %}">{{ cadastro.nome }}</a></h1>
         </div>
     {% endfor %}
 {% endblock %}

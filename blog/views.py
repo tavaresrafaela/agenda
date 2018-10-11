@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator, InvalidPage
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404,redirect
 from django.utils import timezone
 from .models import Post, Cadastro
@@ -6,6 +8,7 @@ from events.models import Event, Register
 from django.utils.timezone import localdate
 from datetime import datetime
 
+ITEMS_PER_PAGE = 5
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -72,6 +75,28 @@ def post_edit(request, pk):
 
 
 
+def all(request):
+    """Exibe todas os eventos consolidados em uma única página, recebe o
+    número da página a ser visualizada via GET."""
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(Event.objects.all(), ITEMS_PER_PAGE)
+    total = paginator.count
+
+    try:
+        events = paginator.page(page)
+    except InvalidPage:
+        events = paginator.page(1)
+
+    context = {
+        'events': events,
+        'total': total,
+        'priorities': Event.priorities_list,
+        'today': localdate(),
+    }
+    return render(request, 'base_cad.html', context)
+
+
 def cad_list(request):
     cadastros = Cadastro.objects.all()
     return render(request, 'blog/cad_list.html', {'cadastros': cadastros})
@@ -106,9 +131,9 @@ def day():
     }
 
 def cad_edit(request, pk):
-    cadastro = get_object_or_404(Register, pk=pk)
-    if request.method == "REGISTER":
-        form = CadForm(request.REGISTER, instance=cadastro)
+    cadastro = get_object_or_404(Cadastro, pk=pk)
+    if request.method == "POST":
+        form = CadForm(request.POST, instance=cadastro)
         if form.is_valid():
             cadastro = form.save(commit=False)
             cadastro.save()
@@ -116,12 +141,8 @@ def cad_edit(request, pk):
     else:
         form = CadForm(instance=cadastro)
 
-    context = {
-        'events': Cadastro.objects.all(),
-        'form': form
-    }
 
-    return render(request, 'blog/cad_edit.html', context)
+    return render(request, 'blog/cad_edit.html', {'form':form})
 
 
 

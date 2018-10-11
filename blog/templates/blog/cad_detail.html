@@ -1,16 +1,15 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/base_cad.html' %}
 
 {% block content %}
      <div class="post">
-         {% if post.published_date %}
-             <div class="date">
-                 {{ post.published_date }}
-             </div>
-         {% endif %}
-         {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'cad_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-         {% endif %}
-         <h1>{{ post.title }}</h1>
-         <p>{{ post.text|linebreaksbr }}</p>
+          <a class="btn btn-default" href="{% url 'cad_edit' pk=cadastro.pk %}"><span class="glyphicon glyphicon-pencil"></a>
+          {{ cadastro.nome }}
+          {{ cadastro.idade }}
+          {{ cadastro.email }}
+          {{ cadastro.telefone }}
+          {{ cadastro.aniversario }}
+          {{ cadastro.sexo }}
+          {{ cadastro.estado }}
+
      </div>
 {% endblock %}
